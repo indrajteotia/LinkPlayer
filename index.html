@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        #video-container {
+            margin-top: 20px;
+            display: none;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        #mode-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <button id="mode-toggle">Light Mode</button>
+    <div>
+        <input type="text" id="video-url" placeholder="Enter video URL">
+        <button id="play-button">Play</button>
+    </div>
+
+    <div id="video-container">
+        <video id="video-player" width="640" height="360" controls></video>
+    </div>
+
+    <script>
+        const videoUrlInput = document.getElementById('video-url');
+        const playButton = document.getElementById('play-button');
+        const videoContainer = document.getElementById('video-container');
+        const videoPlayer = document.getElementById('video-player');
+        const modeToggle = document.getElementById('mode-toggle');
+        let darkMode = false;
+
+        playButton.addEventListener('click', () => {
+            const videoUrl = videoUrlInput.value;
+            if (videoUrl) {
+                videoPlayer.src = videoUrl;
+                videoContainer.style.display = 'block';
+                videoPlayer.load();
+                videoPlayer.play();
+            }
+        });
+
+        modeToggle.addEventListener('click', () => {
+            darkMode = !darkMode;
+            if (darkMode) {
+                document.body.classList.add('dark-mode');
+                modeToggle.textContent = 'Light Mode';
+            } else {
+                document.body.classList.remove('dark-mode');
+                modeToggle.textContent = 'Dark Mode';
+            }
+        });
+    </script>
+</body>
+</html>
